@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Bank Guru" parallel="false">
+	<test name="FIRE FOX">
+		<classes>
+			<class name="bank.user.Test_01_Login" />
+		</classes>
+	</test>
+
+	<test name="CHROME">
+		<classes>
+			<class name="bank.user.Test_02" />
+		</classes>
+	</test> <!--
+	Test -->
+</suite> <!--
+Suite -->
