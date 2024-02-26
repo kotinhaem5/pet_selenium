@@ -20,7 +20,10 @@ public class MainPageObject extends AbstractPage {
 		waitToElementVisible(driver, MainPageUI.STRING_WELCOME);
 		return getElementText(driver, MainPageUI.STRING_WELCOME);
 	}
-
+	public void openNewCustomerPage() {
+		waitToElementClickAble(driver, MainPageUI.NEW_CUSTOMER_LINK);
+		clickToElement(driver, MainPageUI.NEW_CUSTOMER_LINK);
+	}
 //	public NewCustomerPageObject openNewCustomerPage() {
 //		// TODO Auto-generated method stub
 //		waitToElementClickable(driver, MainPageUI.NEW_CUSTOMER_LINK);

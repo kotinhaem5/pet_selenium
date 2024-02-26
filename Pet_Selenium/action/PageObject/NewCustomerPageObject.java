@@ -22,85 +22,83 @@ public class NewCustomerPageObject extends AbstractPage {
 		sendKeyToElement(driver, NewCustomerPageUI.NAME_TEXTBOX, namevalue);
 	}
 
-//	public void inputToDateOfBirthTextbox(String dateOfBirth) {
-//		// TODO Auto-generated method stub
-//		waitToElementVisible(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX);
+	public void inputToDateOfBirthTextbox(String dateOfBirth) {
+		// TODO Auto-generated method stub
+		waitToElementVisible(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX);
 //		removeAttributeInDOM(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, "type");
-//		sendKeyToElement(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, dateOfBirth);
-//	}
+		sendKeyToElement(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, dateOfBirth);
+	}
 
 	public void inputToAddessTextbox(String valueAddess) {
-		// TODO Auto-generated method stub
+	
 		waitToElementVisible(driver, NewCustomerPageUI.ADDRESS_TEXTAREA);
 		sendKeyToElement(driver, NewCustomerPageUI.ADDRESS_TEXTAREA, valueAddess);
 
 	}
 
 	public void inputToCityTextbox(String valueCity) {
-		// TODO Auto-generated method stub
+
 		waitToElementVisible(driver, NewCustomerPageUI.CITY_TEXTBOX);
 		sendKeyToElement(driver, NewCustomerPageUI.CITY_TEXTBOX, valueCity);
 	}
 
 	public void inputToStateTextbox(String valueState) {
-		// TODO Auto-generated method stub
+
 		waitToElementVisible(driver, NewCustomerPageUI.STATE_TEXTBOX);
 		sendKeyToElement(driver, NewCustomerPageUI.STATE_TEXTBOX, valueState);
 
 	}
 
 	public void inputToPinTextbox(String valuePin) {
-		// TODO Auto-generated method stub
+
 		waitToElementVisible(driver, NewCustomerPageUI.PIN_TEXTBOX);
 		sendKeyToElement(driver, NewCustomerPageUI.PIN_TEXTBOX, valuePin);
 
 	}
 
 	public void inputToPhoneTextbox(String valuePhone) {
-		// TODO Auto-generated method stub
+
 		waitToElementVisible(driver, NewCustomerPageUI.PHONE_TEXTBOX);
 		sendKeyToElement(driver, NewCustomerPageUI.PHONE_TEXTBOX, valuePhone);
 	}
 
 	public void inputToEmailTextbox(String valueEmail) {
-		// TODO Auto-generated method stub
+		
 		waitToElementVisible(driver, NewCustomerPageUI.EMAIL_TEXTBOX);
 		sendKeyToElement(driver, NewCustomerPageUI.EMAIL_TEXTBOX, valueEmail);
 
 	}
 
 	public void inputToPasswordTextbox(String valuePassword) {
-		// TODO Auto-generated method stub
+		
 		waitToElementVisible(driver, NewCustomerPageUI.PASSWORD_TEXTBOX);
 		sendKeyToElement(driver, NewCustomerPageUI.PASSWORD_TEXTBOX, valuePassword);
 
 	}
 
-//	public void clickToSubmitButton() {
-//		waitToElementClickable(driver, NewCustomerPageUI.SUBMIT_BUTTON);
-//		clickToElement(driver, NewCustomerPageUI.SUBMIT_BUTTON);
-//		// TODO Auto-generated method stub
-//		
-//	}
+	public void clickToSubmitButton() {
+		waitToElementClickAble(driver, NewCustomerPageUI.SUBMIT_BUTTON);
+		clickToElement(driver, NewCustomerPageUI.SUBMIT_BUTTON);
+	}
 
 	public String getSuccessMessage() {
-		// TODO Auto-generated method stub
+	
 		waitToElementVisible(driver, NewCustomerPageUI.NEW_SUCCESS_MESSAGE);
 		return getElementText(driver, NewCustomerPageUI.NEW_SUCCESS_MESSAGE);
 	}
 
-//	public LoginPageObject clickToLogoutLink() {
-//		// TODO Auto-generated method stub
-//		waitToElementClickable(driver, NewCustomerPageUI.LOGOUT_LINK);
-//		clickToElement(driver, NewCustomerPageUI.LOGOUT_LINK);
-//		waitToAlertPresence(driver);
-//		acceptAlert(driver);
-////		return new LoginPageObject(driver);
+	public void clickToLogoutLink() {
+
+		waitToElementClickAble(driver, NewCustomerPageUI.LOGOUT_LINK);
+		clickToElement(driver, NewCustomerPageUI.LOGOUT_LINK);
+		waitToAlertPresent(driver);
+		acceptAlert(driver);
+//	return new LoginPageObject(driver);
 //		return PageGeneratoManager.getLoginPage(driver);
-//	}
+	}
 
 //	public DeposittPageObject openDepositPage() {
-//		// TODO Auto-generated method stub
+
 //		waitToElementClickable(driver, DepositPageUI.DEPOSIT_LINK);
 //		clickToElement(driver, DepositPageUI.DEPOSIT_LINK);
 //		return PageGeneratoManager.getDeposittPage(driver);

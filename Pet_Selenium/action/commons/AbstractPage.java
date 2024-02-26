@@ -206,8 +206,9 @@ public abstract class AbstractPage {
 		if (find(driver, locator).isSelected()) {
 			find(driver, locator).click();
 		}
+	
 	}
-
+	
 	public boolean isControlDisplay(WebDriver driver, String locator) {
 		return find(driver, locator).isDisplayed();
 	}
@@ -234,16 +235,15 @@ public abstract class AbstractPage {
 
 	}
 
-	public void rightClickToElement(WebDriver driver, String locator) {
+		public void rightClickToElement(WebDriver driver, String locator) {
 		action = new Actions(driver);
-		action.contextClick(find(driver, locator)).perform();
+			action.contextClick(find(driver, locator)).perform();
 
-	}
-
+	}  
 	public void hoverToElement(WebDriver driver, String locator) {
 		action = new Actions(driver);
 		action.moveToElement(find(driver, locator)).perform();
-
+		 
 	}
 	public void dragAndDropElement(WebDriver driver,String sourcelocator,String targetlocator) {
 		action = new Actions(driver);
@@ -273,6 +273,10 @@ public abstract class AbstractPage {
 	public void waitToElementClickAble(WebDriver driver,String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
 		explicitWait.until(ExpectedConditions.elementToBeClickable(byXpath(locator)));
+	}
+	public void removeAttributeInDOM(WebDriver driver, String locator, String attributeRemove) {
+		jsExecutor = (JavascriptExecutor) driver;
+		jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", find(driver, locator));
 	}
 	
 }

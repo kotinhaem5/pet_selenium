@@ -10,8 +10,7 @@ public class LoginPageObject extends AbstractPage {
 	WebDriver driver;
 
 	public LoginPageObject(WebDriver driver) {
-		super();
-		this.driver = driver;
+		this.driver = driver;	
 		System.out.println("Login PageObject:----  " + driver.toString() + "----");
 	}
 //	Constructor 
@@ -22,33 +21,34 @@ public class LoginPageObject extends AbstractPage {
 
 //	MUC DICH: Tinh sa hinh
 	public String getLoginPageUrl() {
-		// TODO Auto-generated method stub
 		return getCurrentPageUrl(driver);
 	}
 
-//	public RegisterPageObject clickToHereLink() {
-//		// TODO Auto-generated method stub
-//		System.out.println("done");
-//		waitToElementClickable(driver, LoginPageUI.HERE_LINK);
-//		clickToElement(driver, LoginPageUI.HERE_LINK);
+	public void clickToHereLink() {
+
+		waitToElementClickAble(driver, LoginPageUI.HERE_LINK);
+		clickToElement(driver, LoginPageUI.HERE_LINK);
+		}
 //		return PageGeneratoManager.getRegisterPage(driver);
 //	}
 
 	public void inputToUserIDTextbox(String userID) {
-		// TODO Auto-generated method stub
 		waitToElementVisible(driver, LoginPageUI.USER_TEXTBOX);
 		sendKeyToElement(driver, LoginPageUI.USER_TEXTBOX, userID);
 
 	}
 
 	public void inputPassworkTextbox(String password) {
-		// TODO Auto-generated method stub
 		waitToElementVisible(driver, LoginPageUI.PASSWORD_TEXTBOX);
 		sendKeyToElement(driver, LoginPageUI.PASSWORD_TEXTBOX, password);
 
 	}
-
-//	public MainPageObject clickToLoginButton() {
+	public void clickToLoginButton() {
+		waitToElementClickAble(driver, LoginPageUI.LOGIN_BUTTON);
+		clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
+		
+	}
+ //	public MainPageObject clickToLoginButton() {
 //		waitToElementClickable(driver, LoginPageUI.LOGIN_BUTTON);
 //		clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
 //		// TODO Auto-generated method stub
@@ -60,7 +60,6 @@ public class LoginPageObject extends AbstractPage {
 
 		// TODO Auto-generated method stub
 		waitToElementVisible(driver, LoginPageUI.LOGIN_FORM);
-
 		return isControlDisplay(driver, LoginPageUI.LOGIN_FORM);
 	}
 
