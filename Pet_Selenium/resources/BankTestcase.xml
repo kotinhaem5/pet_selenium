@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="Bank Guru" parallel="false">
-	<test name="FIRE FOX">
+	
+	<test name="Run On FIRE FOX">
+		<parameter name = "browser" value="firefox" />
 		<classes>
 			<class name="bank.user.Test_01_Login" />
 		</classes>
 	</test>
 
-	<test name="CHROME">
+	<test name=" Run On CHROME">
+		<parameter name = "browser" value="chrome" />
 		<classes>
 			<class name="bank.user.Test_02" />
 		</classes>
