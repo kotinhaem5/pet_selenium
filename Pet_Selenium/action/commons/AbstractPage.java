@@ -13,6 +13,18 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.xml.sax.Locator;
+
+import PageObject.DeposittPageObject;
+import PageObject.EditCustomerPageObject;
+import PageObject.FundTransferPageObject;
+import PageObject.LoginPageObject;
+import PageObject.NewCustomerPageObject;
+import PageUI.BankGuru.DepositPageUI;
+import PageUI.BankGuru.EditCustomerPageUI;
+import PageUI.BankGuru.FundTransferPageUI;
+import PageUI.BankGuru.LoginPageUI;
+import PageUI.BankGuru.MainPageUI;
 
 public abstract class AbstractPage {
 	private WebDriverWait explicitWait;
@@ -137,6 +149,9 @@ public abstract class AbstractPage {
 
 	public void clickToElement(WebDriver driver, String Locator) {
 		find(driver, Locator).click();
+	}
+	public void clickToElement(WebDriver driver, String Locator,String...values) {
+		find(driver, castToRestParameter(Locator, values)).click();
 	}
 
 	public void sendKeyToElement(WebDriver driver, String Locator, String value) {
@@ -277,6 +292,41 @@ public abstract class AbstractPage {
 	public void removeAttributeInDOM(WebDriver driver, String locator, String attributeRemove) {
 		jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", find(driver, locator));
+	}
+	public NewCustomerPageObject openCustomerPage(WebDriver driver) {
+		waitToElementClickAble(driver, MainPageUI.NEW_CUSTOMER_LINK);
+		clickToElement(driver, MainPageUI.NEW_CUSTOMER_LINK);
+		return PageGeneratorManager.getNewCustomerPage(driver);
+		
+	}
+	public DeposittPageObject openDepositePage(WebDriver driver) {
+		waitToElementClickAble(driver, DepositPageUI.DEPOSIT_LINK);
+		clickToElement(driver, DepositPageUI.DEPOSIT_LINK);
+		return PageGeneratorManager.getDepositePage(driver);
+		
+	}
+	public EditCustomerPageObject openEditCustomerPage(WebDriver driver) {
+		waitToElementClickAble(driver, EditCustomerPageUI.EDIT_CUSTOMER_LINK);
+		clickToElement(driver, EditCustomerPageUI.EDIT_CUSTOMER_LINK);
+		return PageGeneratorManager.getEditCustomerPage(driver);
+		
+	}
+	public FundTransferPageObject openFundTransferPage(WebDriver driver) {
+		waitToElementClickAble(driver, FundTransferPageUI.FUND_TRANSFER_LINK);
+		clickToElement(driver, FundTransferPageUI.FUND_TRANSFER_LINK);
+		return PageGeneratorManager.getFundTransferPage(driver);
+		
+	}
+	public LoginPageObject clickToLogoutLinl(WebDriver driver) {
+		waitToElementClickAble(driver, LoginPageUI.LOGOUT_LINK);
+		clickToElement(driver, LoginPageUI.LOGOUT_LINK);
+		return PageGeneratorManager.getLoginPage(driver);
+//		loginpage = newcustomePge.ClicklogoutLink(driver);
+	}
+	public String castToRestParameter(String loactor,String... value) {
+		loactor = String.format(loactor, value);
+		return loactor;
+		
 	}
 	
 }

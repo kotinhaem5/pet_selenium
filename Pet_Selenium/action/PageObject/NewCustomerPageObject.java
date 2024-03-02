@@ -25,7 +25,8 @@ public class NewCustomerPageObject extends AbstractPage {
 	public void inputToDateOfBirthTextbox(String dateOfBirth) {
 		// TODO Auto-generated method stub
 		waitToElementVisible(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX);
-//		removeAttributeInDOM(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, "type");
+
+		removeAttributeInDOM(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, "type");
 		sendKeyToElement(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, dateOfBirth);
 	}
 
