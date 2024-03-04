@@ -20,6 +20,7 @@ import PageObject.EditCustomerPageObject;
 import PageObject.FundTransferPageObject;
 import PageObject.LoginPageObject;
 import PageObject.NewCustomerPageObject;
+import PageUI.BankGuru.AbstractPageUI;
 import PageUI.BankGuru.DepositPageUI;
 import PageUI.BankGuru.EditCustomerPageUI;
 import PageUI.BankGuru.FundTransferPageUI;
@@ -158,6 +159,10 @@ public abstract class AbstractPage {
 		find(driver, Locator).clear();
 		find(driver, Locator).sendKeys(value);
 	}
+	public void sendKeyToElement(WebDriver driver, String Locator, String value,String...values) {
+		find(driver, castToRestParameter(Locator, values)).clear();
+		find(driver, castToRestParameter(Locator, values)).sendKeys(value);
+	}
 
 	public void selectItemInDropdown(WebDriver driver, String locator, String itemValue) {
 		select = new Select(find(driver, locator));
@@ -227,6 +232,9 @@ public abstract class AbstractPage {
 	public boolean isControlDisplay(WebDriver driver, String locator) {
 		return find(driver, locator).isDisplayed();
 	}
+	public boolean isControlDisplay(WebDriver driver, String locator,String... values) {
+		return find(driver, castToRestParameter(locator, values)).isDisplayed();
+	}
 
 	public boolean isControlEnable(WebDriver driver, String locator) {
 		return find(driver, locator).isEnabled();
@@ -234,6 +242,12 @@ public abstract class AbstractPage {
 
 	public boolean isControlSelect(WebDriver driver, String locator) {
 		return find(driver, locator).isSelected();
+	}
+	public boolean isControlSelect(WebDriver driver, String locator,String values) {
+		return find(driver, castToRestParameter(locator, values)).isSelected();
+	}
+	public boolean isControlSelect(WebDriver driver, String locator,String...values) {
+		return find(driver, castToRestParameter(locator, values)).isSelected();
 	}
 
 	public void switchToFrame(WebDriver driver, String locator) {
@@ -277,9 +291,17 @@ public abstract class AbstractPage {
 		explicitWait = new WebDriverWait(driver, timeout);
 		explicitWait.until(ExpectedConditions.presenceOfElementLocated(byXpath(locator)));
 	}
+	public void waitToElementPresence(WebDriver driver,String locator,String...values) {
+		explicitWait = new WebDriverWait(driver, timeout);
+		explicitWait.until(ExpectedConditions.presenceOfElementLocated(byXpath(castToRestParameter(locator, values))));
+	}
 	public void waitToElementVisible(WebDriver driver,String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
 		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byXpath(locator)));
+	}
+	public void waitToElementVisible(WebDriver driver,String locator,String...values) {
+		explicitWait = new WebDriverWait(driver, timeout);
+		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byXpath(castToRestParameter(locator, values))));
 	}
 	public void waitToElementInVisible(WebDriver driver,String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
@@ -288,6 +310,10 @@ public abstract class AbstractPage {
 	public void waitToElementClickAble(WebDriver driver,String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
 		explicitWait.until(ExpectedConditions.elementToBeClickable(byXpath(locator)));
+	}
+	public void waitToElementClickAble(WebDriver driver,String locator,String...values) {
+		explicitWait = new WebDriverWait(driver, timeout);
+		explicitWait.until(ExpectedConditions.elementToBeClickable(byXpath(castToRestParameter(locator, values))));
 	}
 	public void removeAttributeInDOM(WebDriver driver, String locator, String attributeRemove) {
 		jsExecutor = (JavascriptExecutor) driver;
@@ -321,6 +347,8 @@ public abstract class AbstractPage {
 		waitToElementClickAble(driver, LoginPageUI.LOGOUT_LINK);
 		clickToElement(driver, LoginPageUI.LOGOUT_LINK);
 		return PageGeneratorManager.getLoginPage(driver);
+//		LoginPageObject loginpage;
+//		NewCustomerPageObject newcustomePge;
 //		loginpage = newcustomePge.ClicklogoutLink(driver);
 	}
 	public String castToRestParameter(String loactor,String... value) {
@@ -328,5 +356,22 @@ public abstract class AbstractPage {
 		return loactor;
 		
 	}
-	
+/*	so luong page it: 10-20*/
+//	open dynamic pageMenu
+	public AbstractPage openMenuPageByNamePage(WebDriver driver,String pageName) {
+		waitToElementClickAble(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
+		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
+		if(pageName.equals("New Customer")) {
+			return PageGeneratorManager.getNewCustomerPage(driver);
+		}
+		else {
+			throw new RuntimeException();
+		}
+
+	}
+	/*	so luong page nhieu: 10-20*/
+	public void openMenuPagesByNamePage(WebDriver driver,String pageName) {
+		waitToElementClickAble(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
+		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
+	}
 }
