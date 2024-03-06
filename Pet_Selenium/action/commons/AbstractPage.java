@@ -135,23 +135,47 @@ public abstract class AbstractPage {
 		driver.switchTo().window(parentID);
 	}
 
-	public By byXpath(String Locator) {
-		return By.xpath(Locator);
+	public By byLocator(String Locatortype) {
+		By by = null;
+		System.out.println("locator type = " + Locatortype);
+		if (Locatortype.startsWith("id=") || Locatortype.startsWith("ID=") || Locatortype.startsWith("Id=")) {
+			by = By.id(Locatortype.substring(3));
+		} else if (Locatortype.startsWith("class=") || Locatortype.startsWith("Class=")
+				|| Locatortype.startsWith("CLASS=")) {
+			by = By.className(Locatortype.substring(6));
+		} else if (Locatortype.startsWith("Name=") || Locatortype.startsWith("name=")
+				|| Locatortype.startsWith("sNAME=")) {
+			by = By.name(Locatortype.substring(6));
+		} else if (Locatortype.startsWith("Css=") || Locatortype.startsWith("CSS=") || Locatortype.startsWith("css=")) {
+			by = By.cssSelector(Locatortype.substring(4));
+		} else if (Locatortype.startsWith("xpath=") || Locatortype.startsWith("XPATH=")
+				|| Locatortype.startsWith("Xpath=") || Locatortype.startsWith("XPath=")) {
+			by = By.xpath(Locatortype.substring(6));
+		}
+		else {
+			throw new RuntimeException("Locator type is not supporting");
+		}
+		return by;
+	}
+	public String castToRestParameter(String loactor, String... value) {
+		loactor = String.format(loactor, (Object[]) value);
+		return loactor;
 
 	}
 
 	public WebElement find(WebDriver driver, String locator) {
-		return driver.findElement(byXpath(locator));
+		return driver.findElement(byLocator(locator));
 	}
 
 	public List<WebElement> finds(WebDriver driver, String locator) {
-		return driver.findElements(byXpath(locator));
+		return driver.findElements(byLocator(locator));
 	}
 
 	public void clickToElement(WebDriver driver, String Locator) {
 		find(driver, Locator).click();
 	}
-	public void clickToElement(WebDriver driver, String Locator,String...values) {
+
+	public void clickToElement(WebDriver driver, String Locator, String... values) {
 		find(driver, castToRestParameter(Locator, values)).click();
 	}
 
@@ -159,7 +183,8 @@ public abstract class AbstractPage {
 		find(driver, Locator).clear();
 		find(driver, Locator).sendKeys(value);
 	}
-	public void sendKeyToElement(WebDriver driver, String Locator, String value,String...values) {
+
+	public void sendKeyToElement(WebDriver driver, String Locator, String value, String... values) {
 		find(driver, castToRestParameter(Locator, values)).clear();
 		find(driver, castToRestParameter(Locator, values)).sendKeys(value);
 	}
@@ -189,7 +214,7 @@ public abstract class AbstractPage {
 
 		explicitWait = new WebDriverWait(driver, 30);
 		List<WebElement> allItems = explicitWait
-				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(byXpath(childItemLocator)));
+				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(byLocator(childItemLocator)));
 
 		for (WebElement item : allItems) {
 			if (item.getText().trim().equals(expectedItem)) {
@@ -215,6 +240,9 @@ public abstract class AbstractPage {
 	public int countElementSize(WebDriver driver, String locator) {
 		return finds(driver, locator).size();
 	}
+	public int countElementSize(WebDriver driver, String locator,String...values) {
+		return finds(driver, castToRestParameter(locator, values)).size();
+	}
 
 	public void checkToCheckBox(WebDriver driver, String locator) {
 		if (!find(driver, locator).isSelected()) {
@@ -226,13 +254,14 @@ public abstract class AbstractPage {
 		if (find(driver, locator).isSelected()) {
 			find(driver, locator).click();
 		}
-	
+
 	}
-	
+
 	public boolean isControlDisplay(WebDriver driver, String locator) {
 		return find(driver, locator).isDisplayed();
 	}
-	public boolean isControlDisplay(WebDriver driver, String locator,String... values) {
+
+	public boolean isControlDisplay(WebDriver driver, String locator, String... values) {
 		return find(driver, castToRestParameter(locator, values)).isDisplayed();
 	}
 
@@ -243,10 +272,12 @@ public abstract class AbstractPage {
 	public boolean isControlSelect(WebDriver driver, String locator) {
 		return find(driver, locator).isSelected();
 	}
-	public boolean isControlSelect(WebDriver driver, String locator,String values) {
+
+	public boolean isControlSelect(WebDriver driver, String locator, String values) {
 		return find(driver, castToRestParameter(locator, values)).isSelected();
 	}
-	public boolean isControlSelect(WebDriver driver, String locator,String...values) {
+
+	public boolean isControlSelect(WebDriver driver, String locator, String... values) {
 		return find(driver, castToRestParameter(locator, values)).isSelected();
 	}
 
@@ -264,85 +295,104 @@ public abstract class AbstractPage {
 
 	}
 
-		public void rightClickToElement(WebDriver driver, String locator) {
+	public void rightClickToElement(WebDriver driver, String locator) {
 		action = new Actions(driver);
-			action.contextClick(find(driver, locator)).perform();
+		action.contextClick(find(driver, locator)).perform();
 
-	}  
+	}
+
 	public void hoverToElement(WebDriver driver, String locator) {
 		action = new Actions(driver);
 		action.moveToElement(find(driver, locator)).perform();
-		 
+
 	}
-	public void dragAndDropElement(WebDriver driver,String sourcelocator,String targetlocator) {
+
+	public void dragAndDropElement(WebDriver driver, String sourcelocator, String targetlocator) {
 		action = new Actions(driver);
 		action.dragAndDrop(find(driver, sourcelocator), find(driver, targetlocator)).perform();
 	}
-	public void sendKeyBroadToElement(WebDriver driver,String locator,Keys key) {
+
+	public void sendKeyBroadToElement(WebDriver driver, String locator, Keys key) {
 		action = new Actions(driver);
-		action.sendKeys(find(driver, locator),key).perform();
+		action.sendKeys(find(driver, locator), key).perform();
 	}
-	public void scrollToElement(WebDriver driver,String locator) {
+
+	public void scrollToElement(WebDriver driver, String locator) {
 		jsExecutor = (JavascriptExecutor) driver;
 		element = find(driver, locator);
 		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
-	public void waitToElementPresence(WebDriver driver,String locator) {
+
+	public void waitToElementPresence(WebDriver driver, String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
-		explicitWait.until(ExpectedConditions.presenceOfElementLocated(byXpath(locator)));
+		explicitWait.until(ExpectedConditions.presenceOfElementLocated(byLocator(locator)));
 	}
-	public void waitToElementPresence(WebDriver driver,String locator,String...values) {
+
+	public void waitToElementPresence(WebDriver driver, String locator, String... values) {
 		explicitWait = new WebDriverWait(driver, timeout);
-		explicitWait.until(ExpectedConditions.presenceOfElementLocated(byXpath(castToRestParameter(locator, values))));
+		explicitWait
+				.until(ExpectedConditions.presenceOfElementLocated(byLocator(castToRestParameter(locator, values))));
 	}
-	public void waitToElementVisible(WebDriver driver,String locator) {
+
+	public void waitToElementVisible(WebDriver driver, String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
-		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byXpath(locator)));
+		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byLocator(locator)));
 	}
-	public void waitToElementVisible(WebDriver driver,String locator,String...values) {
+
+	public void waitToElementVisible(WebDriver driver, String locator, String... values) {
 		explicitWait = new WebDriverWait(driver, timeout);
-		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byXpath(castToRestParameter(locator, values))));
+		explicitWait
+				.until(ExpectedConditions.visibilityOfElementLocated(byLocator(castToRestParameter(locator, values))));
 	}
-	public void waitToElementInVisible(WebDriver driver,String locator) {
+
+	public void waitToElementInVisible(WebDriver driver, String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
-		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(byXpath(locator)));
+		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(byLocator(locator)));
 	}
-	public void waitToElementClickAble(WebDriver driver,String locator) {
+
+	public void waitToElementClickAble(WebDriver driver, String locator) {
 		explicitWait = new WebDriverWait(driver, timeout);
-		explicitWait.until(ExpectedConditions.elementToBeClickable(byXpath(locator)));
+		explicitWait.until(ExpectedConditions.elementToBeClickable(byLocator(locator)));
 	}
-	public void waitToElementClickAble(WebDriver driver,String locator,String...values) {
+
+	public void waitToElementClickAble(WebDriver driver, String locator, String... values) {
 		explicitWait = new WebDriverWait(driver, timeout);
-		explicitWait.until(ExpectedConditions.elementToBeClickable(byXpath(castToRestParameter(locator, values))));
+		explicitWait.until(ExpectedConditions.elementToBeClickable(byLocator(castToRestParameter(locator, values))));
 	}
+
 	public void removeAttributeInDOM(WebDriver driver, String locator, String attributeRemove) {
 		jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", find(driver, locator));
 	}
+
 	public NewCustomerPageObject openCustomerPage(WebDriver driver) {
 		waitToElementClickAble(driver, MainPageUI.NEW_CUSTOMER_LINK);
 		clickToElement(driver, MainPageUI.NEW_CUSTOMER_LINK);
 		return PageGeneratorManager.getNewCustomerPage(driver);
-		
+
 	}
+
 	public DeposittPageObject openDepositePage(WebDriver driver) {
 		waitToElementClickAble(driver, DepositPageUI.DEPOSIT_LINK);
 		clickToElement(driver, DepositPageUI.DEPOSIT_LINK);
 		return PageGeneratorManager.getDepositePage(driver);
-		
+
 	}
+
 	public EditCustomerPageObject openEditCustomerPage(WebDriver driver) {
 		waitToElementClickAble(driver, EditCustomerPageUI.EDIT_CUSTOMER_LINK);
 		clickToElement(driver, EditCustomerPageUI.EDIT_CUSTOMER_LINK);
 		return PageGeneratorManager.getEditCustomerPage(driver);
-		
+
 	}
+
 	public FundTransferPageObject openFundTransferPage(WebDriver driver) {
 		waitToElementClickAble(driver, FundTransferPageUI.FUND_TRANSFER_LINK);
 		clickToElement(driver, FundTransferPageUI.FUND_TRANSFER_LINK);
 		return PageGeneratorManager.getFundTransferPage(driver);
-		
+
 	}
+
 	public LoginPageObject clickToLogoutLinl(WebDriver driver) {
 		waitToElementClickAble(driver, LoginPageUI.LOGOUT_LINK);
 		clickToElement(driver, LoginPageUI.LOGOUT_LINK);
@@ -351,26 +401,24 @@ public abstract class AbstractPage {
 //		NewCustomerPageObject newcustomePge;
 //		loginpage = newcustomePge.ClicklogoutLink(driver);
 	}
-	public String castToRestParameter(String loactor,String... value) {
-		loactor = String.format(loactor, value);
-		return loactor;
-		
-	}
-/*	so luong page it: 10-20*/
+
+	
+
+	/* so luong page it: 10-20 */
 //	open dynamic pageMenu
-	public AbstractPage openMenuPageByNamePage(WebDriver driver,String pageName) {
+	public AbstractPage openMenuPageByNamePage(WebDriver driver, String pageName) {
 		waitToElementClickAble(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
 		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
-		if(pageName.equals("New Customer")) {
+		if (pageName.equals("New Customer")) {
 			return PageGeneratorManager.getNewCustomerPage(driver);
-		}
-		else {
+		} else {
 			throw new RuntimeException();
 		}
 
 	}
-	/*	so luong page nhieu: 10-20*/
-	public void openMenuPagesByNamePage(WebDriver driver,String pageName) {
+
+	/* so luong page nhieu: 10-20 */
+	public void openMenuPagesByNamePage(WebDriver driver, String pageName) {
 		waitToElementClickAble(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
 		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU, pageName);
 	}
