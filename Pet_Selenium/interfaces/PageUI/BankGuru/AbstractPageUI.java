@@ -7,4 +7,5 @@ public abstract class AbstractPageUI {
 	public static final String LOGOUT_LINK = "//a[text()='Log out']";
 	public static final String NEW_CUSTOMER_LINK = "//a[text()='New Customer']";
 	public static final String DYNAMIC_MENU = "//a[text()='%s']";
+	static final String x ="";
 }

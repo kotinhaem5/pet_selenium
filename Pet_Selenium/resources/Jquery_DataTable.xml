@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Bank Guru" parallel="false">
+	
+	<!-- <test name="Run On FIRE FOX">
+		<parameter name = "browser" value="firefox" />
+		<classes>
+			<class name="bank.user.Test_01_Login" />
+		</classes>
+	</test>
+-->
+	<test name=" Run On CHROME">
+		<parameter name = "browser" value="chrome" />
+		<parameter name = "url" value="https://www.jqueryscript.net/demo/CRUD-Data-Grid-Plugin-jQuery-Quickgrid/" />
+		<classes>
+			<class name="bank.datatable.DataTable" />
+		</classes>
+	</test> 
+
+</suite> <!--
+Suite/ -->

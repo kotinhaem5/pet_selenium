@@ -170,6 +170,9 @@ public abstract class AbstractPage {
 	public List<WebElement> finds(WebDriver driver, String locator) {
 		return driver.findElements(byLocator(locator));
 	}
+	public List<WebElement> finds(WebDriver driver, String locator,String...value) {
+		return driver.findElements(byLocator(castToRestParameter(locator, value)));
+	}
 
 	public void clickToElement(WebDriver driver, String Locator) {
 		find(driver, Locator).click();
@@ -257,11 +260,11 @@ public abstract class AbstractPage {
 
 	}
 
-	public boolean isControlDisplay(WebDriver driver, String locator) {
+	public boolean isElementDisplay(WebDriver driver, String locator) {
 		return find(driver, locator).isDisplayed();
 	}
 
-	public boolean isControlDisplay(WebDriver driver, String locator, String... values) {
+	public boolean isElementDisplay(WebDriver driver, String locator, String... values) {
 		return find(driver, castToRestParameter(locator, values)).isDisplayed();
 	}
 
@@ -316,7 +319,10 @@ public abstract class AbstractPage {
 		action = new Actions(driver);
 		action.sendKeys(find(driver, locator), key).perform();
 	}
-
+	public void sendKeyBroadToElement(WebDriver driver, String locator, Keys key,String...value) {
+		action = new Actions(driver);
+		action.sendKeys(find(driver, castToRestParameter(locator, value)), key).perform();
+	}
 	public void scrollToElement(WebDriver driver, String locator) {
 		jsExecutor = (JavascriptExecutor) driver;
 		element = find(driver, locator);
