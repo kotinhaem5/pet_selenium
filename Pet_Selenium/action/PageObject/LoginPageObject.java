@@ -60,7 +60,7 @@ public class LoginPageObject extends AbstractPage {
 
 		// TODO Auto-generated method stub
 		waitToElementVisible(driver, LoginPageUI.LOGIN_FORM);
-		return isControlDisplay(driver, LoginPageUI.LOGIN_FORM);
+		return isElementDisplay(driver, LoginPageUI.LOGIN_FORM);
 	}
 
 }
